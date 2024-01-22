@@ -1,4 +1,4 @@
-import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
@@ -7,7 +7,8 @@ import styles from './Search.module.scss';
 import { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDebounce } from '~/hooks';
-import * as searchService from '~/apiServices/searchService';
+import * as searchService from '~/services/searchService';
+import { SearchIcon } from '~/components/Icons';
 
 const cx = classNames.bind(styles);
 
@@ -53,10 +54,6 @@ function Search() {
         }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    };
-
     return (
         // Using a wrapper <div> tag around the reference element solves this by creating a new parentNode context.
         <div>
@@ -92,8 +89,8 @@ function Search() {
 
                     {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
 
-                    <button className={cx('search-btn')}>
-                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    <button className={cx('search-btn')} onMouseDown={(e) => e.preventDefault()}>
+                        <SearchIcon />
                     </button>
                 </div>
             </HeadlessTippy>
